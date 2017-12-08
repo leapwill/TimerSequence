@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Timer Sequence</string>
+    <string name="title_reset">Reset</string>
+    <string name="title_playpause">Start/Pause</string>
+    <string name="title_add">Add Segment</string>
+    <string name="time">%1$d:%2$02d</string>
+    <string name="edit_description">Description</string>
+    <string name="edit_title">Edit Segment</string>
+</resources>

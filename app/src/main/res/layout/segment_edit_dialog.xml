@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="20dp"
+    android:layout_gravity="center_horizontal">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/segment_edit_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/segment_edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusForward="@id/segment_edit_minutes"
+            android:hint="@string/edit_description"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/segment_edit_text_layout"
+        android:orientation="horizontal">
+
+        <NumberPicker
+            android:id="@+id/segment_edit_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:nextFocusForward="@id/segment_edit_seconds" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text=":"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <NumberPicker
+            android:id="@+id/segment_edit_seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
