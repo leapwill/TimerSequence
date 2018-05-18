@@ -80,6 +80,7 @@ class MainActivity : Activity(), EditSegmentDialogFragment.EditSegmentListener {
             this.startNextTimer()
             //switch click from edit to skipping to index
             this.findViewById<ListView>(R.id.timer_list).onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                this.timer.cancel()
                 this.segmentIndex = position
                 this.startNextTimer()
             }
