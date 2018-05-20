@@ -34,6 +34,7 @@ class EditSegmentDialogFragment : DialogFragment() {
 
     interface EditSegmentListener {
         fun onEditSegmentDialogPositiveClick(dialog: EditSegmentDialogFragment)
+        fun onEditSegmentDialogNegativeClick(dialog: EditSegmentDialogFragment)
     }
 
     override fun onAttach(context: Context?) {
@@ -69,12 +70,15 @@ class EditSegmentDialogFragment : DialogFragment() {
                 .setCancelable(true)
                 .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
                     this.segmentReturned = Segment(
-                            position = this.position,
-                            minutes = dialogView.findViewById<NumberPicker>(R.id.segment_edit_minutes).value,
-                            seconds = dialogView.findViewById<NumberPicker>(R.id.segment_edit_seconds).value,
-                            description = dialogView.findViewById<TextView>(R.id.segment_edit_description).text.toString()
+                        position = this.position,
+                        minutes = dialogView.findViewById<NumberPicker>(R.id.segment_edit_minutes).value,
+                        seconds = dialogView.findViewById<NumberPicker>(R.id.segment_edit_seconds).value,
+                        description = dialogView.findViewById<TextView>(R.id.segment_edit_description).text.toString()
                     )
                     this.mListener.onEditSegmentDialogPositiveClick(this) })
+                .setNegativeButton("Delete", DialogInterface.OnClickListener { _, _ ->
+                    this.segmentReturned = Segment()
+                    this.mListener.onEditSegmentDialogNegativeClick(this) })
 
         return builder.create()
     }

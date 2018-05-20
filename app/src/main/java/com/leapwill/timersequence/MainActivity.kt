@@ -117,6 +117,13 @@ class MainActivity : Activity(), EditSegmentDialogFragment.EditSegmentListener {
         ((findViewById<ListView>(R.id.timer_list)).adapter as BaseAdapter).notifyDataSetChanged()
     }
 
+    override fun onEditSegmentDialogNegativeClick(dialog: EditSegmentDialogFragment) {
+        //replace old segment with new data
+        dialog.segmentReturned.segmentid = dialog.segmentId
+        DeleteSegment(this.db.segmentDao(), dialog.segmentReturned, this).execute()
+        ((findViewById<ListView>(R.id.timer_list)).adapter as BaseAdapter).notifyDataSetChanged()
+    }
+
     //region Database AsyncTasks
     private class GetSegments(val segmentDao: SegmentDao, val context: Context) : AsyncTask<Void, Void, List<Segment>>() {
 
@@ -128,8 +135,11 @@ class MainActivity : Activity(), EditSegmentDialogFragment.EditSegmentListener {
             super.onPostExecute(result)
             if (context is Activity && result != null) {
                 val segmentListView = context.findViewById<ListView>(R.id.timer_list)
+                val index = segmentListView.firstVisiblePosition
+                val view: View? = segmentListView.getChildAt(0)
                 segmentListView.adapter = SegmentAdapter(context, R.layout.list_segment, result)
                 (segmentListView.adapter as BaseAdapter).notifyDataSetChanged()
+                segmentListView.setSelectionFromTop(index, view?.top ?: 0)
             }
         }
 
@@ -159,12 +169,15 @@ class MainActivity : Activity(), EditSegmentDialogFragment.EditSegmentListener {
         }
     }
 
-    private class DeleteSegment(val segmentDao: SegmentDao, val segment: Segment) : AsyncTask<Void, Void, Unit>() {
-        //TODO implement reorder, drag to delete
+    private class DeleteSegment(val segmentDao: SegmentDao, val segment: Segment, val context: Context) : AsyncTask<Void, Void, Unit>() {
         override fun doInBackground(vararg params: Void?) {
             segmentDao.deleteSegment(segment)
         }
 
+        override fun onPostExecute(result: Unit?) {
+            super.onPostExecute(result)
+            GetSegments(segmentDao, context).execute()
+        }
     }
     //endregion
 
